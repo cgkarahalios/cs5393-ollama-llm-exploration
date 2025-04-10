@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
 import json
 import time
-import psutil
 import os
 import requests
 from datetime import datetime
@@ -31,19 +29,16 @@ HARD_TEXT = ' '.join([' '.join(sent) for sent in gutenberg.sents('melville-moby_
 TEST_PROMPTS = {
     "general_qa": {
         "easy": [
-            "What is photosynthesis?",
-            "Name the planets in our solar system.",
             "What is the capital of France?"
         ],
         "medium": [
-            "Explain how vaccines work to protect against diseases.",
-            "What are the major differences between renewable and non-renewable energy sources?",
-            "Describe the process of evolution by natural selection."
+            "Explain how vaccines work to protect against diseases."
         ],
         "hard": [
-            "Explain the double-slit experiment in quantum physics and its implications for our understanding of light.",
-            "Compare and contrast the major economic theories of Keynesianism, Monetarism, and Austrian Economics.",
-            "Describe the biochemical process of protein synthesis from DNA transcription to translation."
+            "If I buy a SPY call option and it ends up in the money at expiration, but "
+            "I don't have enough cash to "
+            "actually purchase the shares, what happens? Can I still "
+            "profit from the trade without exercising the option?"
         ]
     },
     "summarization": {
@@ -73,7 +68,7 @@ TEST_PROMPTS = {
             "Write a short story about a dog who finds a treasure."
         ],
         "medium": [
-            "Write a short story that begins with: 'The door creaked open, revealing a room that hadn't been entered in decades.'"
+            "Write a short story about modern historical events with references and allusions towards greek history and famous greek figures/myths"
         ],
         "hard": [
             "Write a short story that uses non-linear narrative structure to explore the theme of memory. Include at least three different time periods and ensure they interconnect meaningfully."
@@ -82,69 +77,42 @@ TEST_PROMPTS = {
 }
 
 
-def run_ollama(model, prompt, timeout=60):
-    """Run Ollama with the given model and prompt using HTTP API instead of CLI"""
+def run_ollama(model, prompt):
+    """Run Ollama with the given model and prompt using HTTP API - NO TIMEOUT, only tracking time"""
     url = "http://localhost:11434/api/generate"
     headers = {"Content-Type": "application/json"}
     data = {
         "model": model,
         "prompt": prompt,
-        "stream": False  # easier to handle for evaluation
+        "stream": False
     }
 
+    print(f"      Starting request to {model}...")
     start_time = time.time()
 
-    # Start monitoring resources (still useful even with API approach)
-    process = psutil.Process(os.getpid())
-    start_memory = process.memory_info().rss / 1024 / 1024  # MB
-    start_cpu = process.cpu_percent(interval=None)
-
     try:
-        response = requests.post(url, headers=headers, json=data, timeout=timeout)
+        # No timeout parameter - will run until completion
+        response = requests.post(url, headers=headers, json=data)
         end_time = time.time()
-        end_memory = process.memory_info().rss / 1024 / 1024  # MB
-        end_cpu = process.cpu_percent(interval=None)
 
         if response.status_code == 200:
             result_json = response.json()
             return {
                 "output": result_json.get("response", ""),
-                "error": "",
-                "time_taken": end_time - start_time,
-                "memory_usage": end_memory - start_memory,
-                "cpu_usage": end_cpu - start_cpu
+                "time_taken": end_time - start_time
             }
         else:
             return {
                 "output": "",
                 "error": f"HTTP {response.status_code}: {response.text}",
-                "time_taken": end_time - start_time,
-                "memory_usage": end_memory - start_memory,
-                "cpu_usage": end_cpu - start_cpu
+                "time_taken": end_time - start_time
             }
-    except requests.exceptions.Timeout:
-        end_time = time.time()
-        end_memory = process.memory_info().rss / 1024 / 1024  # MB
-        end_cpu = process.cpu_percent(interval=None)
-
-        return {
-            "output": "[Timeout: Model took too long to respond]",
-            "error": "Request timed out",
-            "time_taken": timeout,
-            "memory_usage": end_memory - start_memory,
-            "cpu_usage": end_cpu - start_cpu
-        }
     except Exception as e:
         end_time = time.time()
-        end_memory = process.memory_info().rss / 1024 / 1024  # MB
-        end_cpu = process.cpu_percent(interval=None)
-
         return {
             "output": "",
             "error": str(e),
-            "time_taken": end_time - start_time,
-            "memory_usage": end_memory - start_memory,
-            "cpu_usage": end_cpu - start_cpu
+            "time_taken": end_time - start_time
         }
 
 
@@ -153,7 +121,7 @@ def main():
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Create directories for output if they don't exist
-    os.makedirs("results/raw", exist_ok=True)
+    os.makedirs("../results/raw", exist_ok=True)
 
     print("Starting model evaluation...")
     print(f"Models to test: {', '.join(MODELS)}")
@@ -185,8 +153,6 @@ def main():
 
                         if "error" in result and result["error"]:
                             print(f"      Error: {result['error']}")
-                        elif result["output"] == "[Timeout: Model took too long to respond]":
-                            print(f"      ⚠️ TIMEOUT after {result['time_taken']} seconds")
                         else:
                             response_length = len(result["output"].split())
                             print(f"      Completed in {result['time_taken']:.2f} seconds")
@@ -197,10 +163,8 @@ def main():
 
                         difficulty_results.append({
                             "prompt": prompt,
-                            "response": result["output"],
-                            "time_taken": result["time_taken"],
-                            "memory_usage": result["memory_usage"],
-                            "cpu_usage": result["cpu_usage"]
+                            "response": result.get("output", ""),
+                            "time_taken": result["time_taken"]
                         })
                     except Exception as e:
                         print(f"      Error: {str(e)}")
@@ -216,7 +180,7 @@ def main():
         results[model] = model_results
 
     # Save results to a JSON file
-    output_filename = f"results/raw/ollama_results_{timestamp}.json"
+    output_filename = f"../results/raw/ollama_results_{timestamp}.json"
     with open(output_filename, "w") as f:
         json.dump(results, f, indent=2)
 
