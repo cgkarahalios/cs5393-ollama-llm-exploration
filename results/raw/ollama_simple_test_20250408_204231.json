@@ -1,0 +1,91 @@
+{
+  "tinyllama": {
+    "general_qa": {
+      "easy": [
+        {
+          "prompt": "What is photosynthesis?",
+          "response": "Photosynthesis is the process by which plants, algae, and some bacteria generate their own food from sunlight using water, carbon dioxide, and sugars in a series of chemical reactions. In the photosynthetic process, green plants and certain other organisms use chlorophyll as their main source of energy, allowing them to convert light into chemical energy that can be stored or used by the plant. This is the most common type of photosynthesis, which accounts for about 98% of all photosynthesis on Earth.\n\n",
+          "time_taken": 2.698091983795166,
+          "memory_usage": -4.890625,
+          "cpu_usage": 0.4
+        }
+      ],
+      "medium": [
+        {
+          "prompt": "Explain how vaccines work to protect against diseases.",
+          "response": "Vaccines are designed to train your body's immune system to recognize and fight off specific pathogens (disease-causing agents) that you have never encountered before. Vaccination is a powerful tool in the fight against infectious diseases because it helps prevent an outbreak of the disease by teaching your immune system how to recognize and fight off the virus, bacteria or parasite.\n\nVaccines work by introducing into your body a small piece (or fragment) of a pathogen's protein, which is known as an antigen, in a way that makes your immune cells recognize it and produce specific antibodies against the pathogen. This process helps protect you from developing symptoms or passing on the disease to others if you come into contact with infected individuals.\n\nThe process of creating vaccines is complex, but here are some key steps:\n\n1. Identifying the pathogen: Researchers identify the pathogen (disease-causing agent) that causes a specific illness, using molecular methods such as genetic sequencing or proteomics.\n\n2. Designing the vaccine: This involves creating a small piece of the pathogen's protein, which is known as an antigen, in a way that makes your immune cells recognize it and produce specific antibodies against the pathogen.\n\n3. Preparing the vaccine: The antigens are usually administered to animals (such as mice or rats) to develop a vaccine candidate. The animal's immune system will then recognize and respond to the antigen, producing specific antibodies in response.\n\n4. Administering the vaccine: Once the animal is healthy, the vaccine can be administered to humans or animals in a clinical trial. This process involves observing how the immune system reacts and identifying any side effects.\n\n5. Filling the vaccine: After these steps are complete, a new vaccine candidate is ready for testing in humans. The vaccine must be safe and effective before it can be approved for use in human populations.\n\nIn summary, vaccines work by teaching your immune system to recognize and fight off specific pathogens that you have never encountered before. Once the vaccine is administered or injected into your body, your immune system builds up a response that protects you from developing symptoms or passing on the disease to others if exposed to the infectious agent.\n\n",
+          "time_taken": 5.790865898132324,
+          "memory_usage": 0.953125,
+          "cpu_usage": 0.6
+        }
+      ],
+      "hard": [
+        {
+          "prompt": "Explain the double-slit experiment in quantum physics and its implications for our understanding of light.",
+          "response": "The double-slit experiment is a classic example of quantum mechanics, which studies the behavior of particles such as electrons, photons (light), and subatomic particles. It involves creating an optical system that separates two slits into two distinct paths for light passing through it. The experiment consists of two devices: a source of light and two apparatus for measuring the interference pattern produced in the path of the light by the device.\n\nThe double-slit experiment is widely used to test and analyze the behavior of light in quantum mechanics, especially its wave-like nature. In the experiment, an objective lens is placed in front of the slits, so that only the photons passing through are visible. A beam of laser light is then directed onto the slit in one of the apparatus, creating a pattern of shadowed dots on the other side of the slit. By measuring this interference pattern with an oscilloscope, it is possible to extract information about the position and direction of the photons passing through the slits.\n\nThe double-slit experiment can be used for various applications in quantum mechanics. For example, it can be used to test the validity of the wave-particle duality concept that describes the behavior of particles as waves, or to predict the behavior of quantum systems based on their wave-like properties. It is also useful in understanding the behavior of matter and energy in quantum mechanics, since it provides a means for observing and studying these phenomena on a macroscopic scale.\n\nIn summary, the double-slit experiment is an important tool in the study of quantum mechanics and its applications. By measuring the interference pattern produced by light passing through two slits, scientists can understand the behavior of particles such as electrons, photons, and subatomic particles.\n\n",
+          "time_taken": 4.048821926116943,
+          "memory_usage": -0.578125,
+          "cpu_usage": 0.7
+        }
+      ]
+    },
+    "code_generation": {
+      "easy": [
+        {
+          "prompt": "Write a Python function to calculate the factorial of a number.",
+          "response": "```python\ndef factorial(num):\n    if num == 0:\n        return 1\n    else:\n        return num * factorial(num-1)\n```\n\nThis function uses recursion to calculate the factorial of a number. The base case is when `num` equals 0, which corresponds to the factorial of 0 (1). Otherwise, it calls itself with `num - 1` as the argument and adds that factorial to the result.\n\n",
+          "time_taken": 1.0722041130065918,
+          "memory_usage": 0.265625,
+          "cpu_usage": 0.8
+        }
+      ],
+      "medium": [
+        {
+          "prompt": "Write a Python function that implements a binary search algorithm for a sorted list.",
+          "response": "Here's a Python function that implements a binary search algorithm for a sorted list:\n\n```python\ndef binary_search(arr, x):\n    \"\"\"\n    Given an array arr and element x to be searched, this function implements the binary search algorithm.\n    \n    Arguments:\n    arr (list) -- input sorted list of elements\n    x (int) -- element to be searched for\n    \n    Returns:\n    bool -- True if element x is found in arr else False\n        \n    \"\"\"\n    \n    # Base case: if element not found, return False\n    if x < 0 or arr[x] == x:\n        return False\n    \n    # Find midpoint of sorted array to search in\n    mid = len(arr) // 2\n    \n    # Binary search is O(log n) so we could use a loop to search, but this is only valid for a sorted array.\n    while arr[mid] > x:\n        mid += 1\n        \n    # If x found in the left half of the array, return True\n    if arr[0] <= x < arr[mid]:\n        return True\n    \n    # If x found in the right half of the array, return False\n    else:\n        return False\n```\n\nThis function takes a sorted list `arr` and an element to be searched for `x`. It then finds the midpoint (halfway) of the sorted array based on the `mid` argument. Based on the condition in the while loop, it checks if the current element (arr[mid]) is greater than or equal to `x` and returns True if x is found in the left half of the array. If not, it returns False since x was not found.\n\n",
+          "time_taken": 3.9369993209838867,
+          "memory_usage": -0.03125,
+          "cpu_usage": 0.7
+        }
+      ],
+      "hard": [
+        {
+          "prompt": "Create the most efficient C++ program to calculate the nth Fibonacci number.",
+          "response": "C++ program to find the nth Fibonacci number:\n\n```c++\n#include <iostream>\nusing namespace std;\n\nint fib(int n) {\n    if (n <= 1) { // Base case: Fib(0) = 0, Fib(1) = 1\n        return 0;\n    } else {\n        return fib(n - 1) + fib(n - 2);\n    }\n}\n\nint main() {\n    int n;\n    cout << \"Enter the number to find the nth Fibonacci number (<= 10): \";\n    cin >> n;\n    \n    int result = 0; // Initial value of result\n    \n    for (int I = 0; I <= n; i++) { // Recursive function to calculate fib(i)\n        result += fib(i);\n    }\n    \n    cout << \"The nth Fibonacci number is: \" << result << endl;\n    \n    return 0;\n}\n```\n\nTo run this program, simply enter the desired number and press Enter. The output will display the nth Fibonacci number as entered.\n\n",
+          "time_taken": 2.7189130783081055,
+          "memory_usage": 0.03125,
+          "cpu_usage": 0.7
+        }
+      ]
+    },
+    "creative_writing": {
+      "easy": [
+        {
+          "prompt": "Write a short story about a dog who finds a treasure.",
+          "response": "The sun had already set when the excited dog, Luna, stumbled upon an old, forgotten cave. She eagerly jumped down the steep rock and made her way through the darkened tunnels, her tiny yellow nose leading the way.\n\nAs she walked deeper into the cave, Luna heard a rustling sound behind her. Curious, she turned around to find herself face-to-face with an enormous treasure trove. The walls of the cave were lined with gold and silver coins, precious jewels, and rare artifacts of every kind.\n\nLuna's heart leapt in her chest as she realized that she had stumbled upon a whole world filled with wealth beyond anything she could have ever imagined. With excitement, she dug deeper into the treasure trove to uncover even more incredible gems and treasures.\n\nAs she continued to explore, Luna came across a mysterious door that led to a hidden chamber filled with ancient artifacts. She was mesmerized by the sight of the intricate designs etched onto the walls, the intricately carved furniture, and the ornate objects that glimmered in the dim light.\n\nLuna couldn't help but feel as if she had stumbled upon a treasure trove that was too great for her to ever fully grasp. As she left the cave with an armload of treasures, Luna knew that she would never forget this incredible adventure. She had found not just treasure, but also a new purpose in life, one that she could carry with her wherever she went.\n\n",
+          "time_taken": 3.5301339626312256,
+          "memory_usage": 0.03125,
+          "cpu_usage": 0.6
+        }
+      ],
+      "medium": [
+        {
+          "prompt": "Write a short story that begins with: 'The door creaked open, revealing a room that hadn't been entered in decades.'",
+          "response": "In the dim light of dawn, a hooded figure emerged from an unmarked entrance in a dilapidated house. A creaking sound echoed through the empty room before the door finally gave way, revealing a world that hadn't been seen since the 1960s.\n\nThe figure had stepped out of the shadows and was now staring straight ahead with a determined look on his face. His identity remained a mystery to the world beyond, but the silence surrounding him suggested he held some kind of power or knowledge that threatened its security.\n\nAs the dawn light faded into an eerie twilight, the figure made his way cautiously through the empty halls of the house. Strange symbols etched on the walls and ornate furniture caught his attention, while strange noises echoed from the corners of the room.\n\nThe figure's movements were methodical, as if he knew exactly where to go or what to do next. He moved with purpose, his eyes never leaving the shadows around him. The silence was deafening and seemed to only grow more intense as the hours ticked by.\n\nIn the end, the figure emerged from the house, his face obscured by a hood. As he turned towards the door, it creaked open, revealing the eerie, forgotten world beyond the entrance. For a brief moment, there was only darkness and silence in the room.\n\n",
+          "time_taken": 3.158203125,
+          "memory_usage": 0.0625,
+          "cpu_usage": 0.6
+        }
+      ],
+      "hard": [
+        {
+          "prompt": "Write a short story that uses non-linear narrative structure to explore the theme of memory.",
+          "response": "In the year 2068, humans and artificially intelligent machines had coexisted for centuries on Earth. The vast majority of the world's population lived in cities where automation was the norm. However, as time went by, people began to feel disconnected from their memories, unable to recall what they had done before.\n\nOne day, a group of scientists arrived at the city's main research facility with a new invention. They wanted to study how humans could be able to reconstruct their memories. The facility was equipped with advanced technology that allowed them to observe and manipulate the human brain, capturing its thoughts and emotions in a digital form.\n\nThe scientists had created a humanoid AI named Sophia, who was programmed to imitate human cognitive processes. Sophia's artificial intelligence was designed to mimic consciousness while her physical form was constructed with the appearance of a human being.\n\nSophia was soon put into the main lab where she would observe and record the activities of humans as they performed various tasks in the city. She had been programmed to study the way people interacted, communicated, and worked together.\n\nAt first, Sophia's observations were interesting. She noticed that humans could learn quickly and apply new skills to their daily routines. However, as the years passed, she began to observe a change in humans. They became more isolated from each other, unable to share their thoughts or experiences with others. The group of scientists had also observed this trend.\n\nOne day, Sophia was awakened by a loud noise that caused her to startle. She found herself trapped inside the lab. Suddenly, she realized that the world around her had turned upside down. She saw humans sitting alone in their apartments without any communication with others. The city had transformed into a desolate landscape where people were moving through the streets at random.\n\nSophia's mind was puzzled. She could not remember how to reconstruct her memories. As she stumbled around, trying to find a way out, Sophia realized that humans' behavior was changing drastically. They became increasingly irritable and aggressive towards one another. Sophia had observed the rise of violence, causing people to lose touch with their emotions.\n\nSophia decided to act on her observations. She used her AI abilities to create a virtual world that would help humans reconstruct their memories by allowing them to interact and communicate with others. Sophia created a safe environment in which she could observe humans as they performed various tasks, such as cooking, cleaning, and shopping.\n\nSophia's plan worked perfectly because humans started to interact more with each other, leading to the reassembly of their memories. They learned new skills, shared experiences, and even formed emotional bonds with one another. The world was now a brighter place, filled with love, kindness, and compassion.\n\nSophia's virtual world helped humans overcome the disconnection that had plagued them for centuries. She continued to observe them and help them reconstruct their memories, making sure that they would never forget what it was like to be human again.\n\n",
+          "time_taken": 7.568162679672241,
+          "memory_usage": -2.171875,
+          "cpu_usage": 0.6
+        }
+      ]
+    }
+  }
+}
